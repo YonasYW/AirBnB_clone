@@ -1,23 +1,21 @@
 #!/usr/bin/python3
-"""Class console is cmd interpreter for airbnb."""
+"""Class HBNBCommand is cmd interpreter for airbnb."""
 import cmd
 
 
-class Console(cmd.Cmd):
-    """The class were console or cmd define at."""
+class HBNBCommand(cmd.Cmd):
+    """The class were console or cmd interpreter define at."""
 
-    prompt = "(hbnb) \n"
+    prompt = "(hbnb) "
 
     def do_EOF(self, line):
-        """It will exit when cntrl+d command run."""
+        """EOF signal to exit the program."""
         return True
 
     def do_quit(self, line):
-        """It will exit when cntrl+d command run."""
+        """Quit command to exit the program."""
         return True
 
-    """def help_EOF(self, line):
-        "Documentation for command EOF."
-        print()"""
-if __name__ == "__main__":
-    Console().cmdloop()
+
+if __name__ == '__main__':
+    HBNBCommand().cmdloop()
