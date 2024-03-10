@@ -30,19 +30,25 @@ class HBNBCommand(cmd.Cmd):
                 }
         if '.' in arg:
             argv = arg.split('.')
-            name_cm = str(argv[1].strip('()'))
+            name_cm = argv[1].strip('()')
             cl_n = argv[0]
             match = re.search(r'\((.*?)\)', argv[1])
 
-            if "show" in name_cm:
-                class_id = match.group(1)
-                return com_list[show](cl_n)(class_id)
+            if cl_n in HBNBCommand.cl:
+                temp = name_cm.strip('()')
+                method_n = temp.split("(")[0]
+                temp1 = temp.split("(")[-1]
+                cls_id = temp1.strip('"')
+                cl_n += " " + cls_id
+                return com_list[method_n](cl_n)
             elif ((name_cm not in com_list.keys())
                     or (cl_n not in HBNBCommand.cl)):
                 print("** Unkown syntax: {} ***".format(arg))
                 return
             else:
                 return com_list[name_cm](cl_n)
+        else:
+            print("** Unkown syntax: {} ***".format(arg))
 
     def emptyline(self):
         """Do nothing when there is no command or empty line."""
