@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """Class Consl is cmd interpreter for airbnb."""
 import cmd
+import shlex
 from models import storage
 from models.base_model import BaseModel
 from models.user import User
@@ -99,7 +100,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_update(self, line):
         """Update an instance based on class name and id."""
-        argv = line.split()
+        argv = shlex.split(line)
         dict_all = storage.all()
 
         if len(line) == 0:
@@ -120,9 +121,10 @@ class HBNBCommand(cmd.Cmd):
         else:
             key = "{}.{}".format(argv[0], argv[1])
             inst = dict_all[key]
-            if hasattr(inst, argv[1]):
-                getattr(inst, argv[1], argv[2])
-                inst.save()
+            if argv[1] in ["id", "created_at", "updated_at"]:
+                return
+            setattr(inst, argv[2], argv[3])
+            inst.save()
 
 
 if __name__ == '__main__':
