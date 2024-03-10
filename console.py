@@ -18,6 +18,24 @@ class HBNBCommand(cmd.Cmd):
     prompt = "(hbnb) "
     cl = ["BaseModel", "User", "State", "City", "Amenity", "Place", "Review"]
 
+    def default(self, arg):
+        """Default behaviour for the console when there is no cmd at 1st arg."""
+        com_list = {
+            "all": self.do_all,
+            "show": self.do_show,
+            "destroy": self.do_destroy,
+            "update": self.do_update
+                }
+        if '.' in arg:
+            argv = arg.split('.')
+            name_cm = argv[1].strip('()')
+            cl_n = argv[0]
+            if (name_cm not in com_list.keys()) or (cl_n not in HBNBCommand.cl):
+                print("** Unkown syntax: {} ***".format(arg))
+                return 
+            else:
+                return com_list[name_cm](cl_n)
+
     def emptyline(self):
         """Do nothing when there is no command or empty line."""
         pass
