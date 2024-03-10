@@ -23,6 +23,7 @@ class HBNBCommand(cmd.Cmd):
         com_list = {
             "all": self.do_all,
             "show": self.do_show,
+            "count": self.do_count,
             "destroy": self.do_destroy,
             "update": self.do_update
                 }
@@ -144,6 +145,15 @@ class HBNBCommand(cmd.Cmd):
             setattr(inst, argv[2], argv[3])
             inst.save()
 
+    def do_count(self, line):
+        """Count the number of instances of a class print the number."""
+        count = 0
+        dict_all = storage.all()
+
+        for key in dict_all.keys():
+            if key.split(".")[0] in line:
+                count += 1
+        print(count)
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
