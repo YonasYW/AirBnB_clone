@@ -37,7 +37,8 @@ class HBNBCommand(cmd.Cmd):
             if "show" in name_cm:
                 class_id = match.group(1)
                 return com_list[show](cl_n)(class_id)
-            elif (name_cm not in com_list.keys()) or (cl_n not in HBNBCommand.cl):
+            elif ((name_cm not in com_list.keys())
+                    or (cl_n not in HBNBCommand.cl)):
                 print("** Unkown syntax: {} ***".format(arg))
                 return
             else:
@@ -68,7 +69,7 @@ class HBNBCommand(cmd.Cmd):
             print("{}".format(n_model.id))
 
     def do_show(self, line):
-        """Print the string rep __str of inst based on the class name and id."""
+        """Print the string rep __str of inst based on class name,id."""
         argv = line.split()
         len_arg = len(argv)
         all_arg = storage.all()
@@ -103,7 +104,7 @@ class HBNBCommand(cmd.Cmd):
             BaseModel.save(self)
 
     def do_all(self, line):
-        """Print all __str__ of all instances based or not on the class name."""
+        """Print all __str__ of all instances based or not class name."""
         list_str = []
         dict_v = storage.all()
 
@@ -160,6 +161,7 @@ class HBNBCommand(cmd.Cmd):
             if key.split(".")[0] in line:
                 count += 1
         print(count)
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
