@@ -2,6 +2,7 @@
 """Class Consl is cmd interpreter for airbnb."""
 import cmd
 import shlex
+import re
 from models import storage
 from models.base_model import BaseModel
 from models.user import User
@@ -19,7 +20,7 @@ class HBNBCommand(cmd.Cmd):
     cl = ["BaseModel", "User", "State", "City", "Amenity", "Place", "Review"]
 
     def default(self, arg):
-        """Default behaviour for the console when there is no cmd at 1st arg."""
+        """Last behaviour for the console when there is no cmd at 1st arg."""
         com_list = {
             "all": self.do_all,
             "show": self.do_show,
@@ -29,11 +30,16 @@ class HBNBCommand(cmd.Cmd):
                 }
         if '.' in arg:
             argv = arg.split('.')
-            name_cm = argv[1].strip('()')
+            name_cm = str(argv[1].strip('()'))
             cl_n = argv[0]
-            if (name_cm not in com_list.keys()) or (cl_n not in HBNBCommand.cl):
+            match = re.search(r'\((.*?)\)', argv[1])
+
+            if "show" in name_cm:
+                class_id = match.group(1)
+                return com_list[show](cl_n)(class_id)
+            elif (name_cm not in com_list.keys()) or (cl_n not in HBNBCommand.cl):
                 print("** Unkown syntax: {} ***".format(arg))
-                return 
+                return
             else:
                 return com_list[name_cm](cl_n)
 
