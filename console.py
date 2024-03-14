@@ -34,7 +34,7 @@ class HBNBCommand(cmd.Cmd):
             cl_n = argv[0]
             match = re.search(r'\((.*?)\)', argv[1])
 
-            if cl_n in HBNBCommand.cl:
+            if cl_n in HBNBCommand.cl and "(" in name_cm:
                 temp = name_cm.strip('()')
                 method_n = temp.split("(")[0]
                 temp1 = temp.split("(")[-1]
